@@ -1,0 +1,104 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
+@import "tailwindcss";
+
+@tailwind utilities;
+
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+@layer utilities {
+  .background-blur {
+    @apply bg-white/70 hover:bg-zinc-200/70 dark:bg-zinc-800/50 dark:hover:bg-zinc-900/50 backdrop-blur-lg;
+  }
+  .background-blur-no-hover {
+    @apply bg-white/70 dark:bg-zinc-800/50 backdrop-blur-xl;
+  }
+}
+
+html,
+body {
+  font-family: "Open Sans", sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden !important;
+}
+
+.h-screen-dvh {
+  height: 100dvh;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #3f3f46;
+  border-radius: 8px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #27272a;
+}
+::-webkit-scrollbar-button {
+  display: none;
+  height: 0;
+  width: 0;
+}
+
+html {
+  scrollbar-color: #3f3f46 transparent;
+  scrollbar-width: thin;
+}
+
+html:not([data-theme="dark"]) {
+  scrollbar-color: #a1a1aa transparent;
+}
+
+.modal-enter-active,
+.modal-leave-active {
+  transition: all 0.3s ease;
+}
+
+.modal-enter-from,
+.modal-leave-to {
+  opacity: 0;
+  transform: scale(0.9);
+}
+
+.modal-enter-to,
+.modal-leave-from {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.custom-scroll-1 {
+  scrollbar-width: thin;
+  scrollbar-color: #3f3f46 transparent;
+}
+
+html:not([data-theme="dark"]) .custom-scroll-1 {
+  scrollbar-color: #a1a1aa transparent;
+}
+
+.custom-scroll-1::-webkit-scrollbar-button {
+  display: none;
+  height: 0;
+  width: 0;
+}
+
+.custom-scroll-1::-webkit-scrollbar {
+  width: 6px;
+  background: transparent;
+}
+.custom-scroll-1::-webkit-scrollbar-thumb {
+  background: #3f3f46;
+  border-radius: 8px;
+}
+.custom-scroll-1::-webkit-scrollbar-thumb:hover {
+  background: #27272a;
+}
+
+html:not([data-theme="dark"]) .custom-scroll-1::-webkit-scrollbar-thumb {
+  background: #a1a1aa !important; 
+}
+html:not([data-theme="dark"]) .custom-scroll-1::-webkit-scrollbar-thumb:hover {
+  background: #71717a !important;
+}

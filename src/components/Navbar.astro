@@ -1,0 +1,142 @@
+<header class="fixed top-0 -left-0 w-full z-30 px-4">
+  <div
+    class="background-blur rounded-lg mt-3 flex items-center justify-between px-4 py-2"
+  >
+    <a href="/" class="text-xl font-semibold">AnimeList</a>
+    <div class="flex gap-2 items-center">
+      <button
+        id="go-to-search-button"
+        type="button"
+        class="flex items-center justify-center p-2.5 hover:bg-zinc-200 dark:hover:bg-zinc-700 rounded-lg cursor-pointer transition-colors"
+      >
+        <svg
+          class="size-4"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="icon icon-tabler icons-tabler-outline icon-tabler-search"
+          ><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path
+            d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path><path
+            d="M21 21l-6 -6"></path></svg
+        >
+      </button>
+      <button
+        id="theme-button"
+        type="button"
+        class="flex items-center justify-center p-2 hover:bg-zinc-200 dark:hover:bg-zinc-700 rounded-lg cursor-pointer transition-colors"
+      >
+        <svg
+          class="hidden dark:block size-5"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          ><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path
+            d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"></path><path
+            d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7"
+          ></path></svg
+        >
+        <svg
+          class="block dark:hidden size-5"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="icon icon-tabler icons-tabler-outline icon-tabler-moon"
+          ><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path
+            d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z"
+          ></path></svg
+        >
+      </button>
+    </div>
+  </div>
+</header>
+
+<button
+  id="to-top-button"
+  aria-label="Go up"
+  class="hidden fixed bottom-4 right-4 z-20 text-white bg-blue-500 hover:bg-blue-600 p-2 rounded-lg cursor-pointer"
+>
+  <svg
+    class="size-5"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-up"
+    ><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path
+      d="M6 15l6 -6l6 6"></path></svg
+  >
+</button>
+
+<script>
+  document.addEventListener("astro:page-load", () => {
+    const savedTheme = localStorage.getItem("theme");
+    const prefersDarkMode = window.matchMedia(
+      "(prefers-color-scheme: dark)"
+    ).matches;
+
+    const currentTheme = savedTheme ?? (prefersDarkMode ? "dark" : "light");
+    document.documentElement.setAttribute("data-theme", currentTheme);
+
+    const themeButton = document.querySelector("#theme-button");
+
+    if (themeButton) {
+      themeButton.addEventListener("click", () => {
+        const pageTheme =
+          document.documentElement.getAttribute("data-theme") || "light";
+        const newTheme = pageTheme === "dark" ? "light" : "dark";
+
+        document.documentElement.setAttribute("data-theme", newTheme);
+        localStorage.setItem("theme", newTheme);
+      });
+    }
+
+    const toTopButton = document.querySelector("#to-top-button");
+
+    if (toTopButton) {
+      window.addEventListener("scroll", () => {
+        if (window.scrollY > 800) {
+          toTopButton.classList.remove("hidden");
+        } else {
+          toTopButton.classList.add("hidden");
+        }
+      });
+
+      toTopButton.addEventListener("click", () => {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      });
+    }
+
+    const goToSearchButton = document.querySelector("#go-to-search-button");
+
+    if (goToSearchButton) {
+      goToSearchButton.addEventListener("click", () => {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      });
+    }
+  });
+</script>

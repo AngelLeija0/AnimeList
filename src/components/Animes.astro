@@ -1,0 +1,41 @@
+---
+import AnimeService from "@/data/AnimeService";
+
+const animes = await AnimeService.get({
+  size: 50,
+  sortBy: "imdb_rate:desc",
+});
+---
+
+<section class="flex flex-col p-4 mt-14">
+  <div class="flex justify-center mb-10">
+    <h2 class="text-5xl text-white font-bold">Animes</h2>
+  </div>
+  <div class="grid grid-cols-4 gap-4">
+    {
+      animes.map((anime) => (
+        <a
+          href={`animes/${anime.id}`}
+          class="w-full h-140 overflow-hidden rounded-xl relative group cursor-pointer"
+        >
+          <img
+            src={anime.image_src}
+            alt={anime.title}
+            transition:name={`anime-image-${anime.id}`}
+            class="w-full h-full object-cover z-1"
+          />
+          <div class="hidden group-hover:block absolute top-0 left-0 w-full h-full z-2 bg-black/50" />
+          <div class="hidden group-hover:flex transition-all duration-1000 absolute top-0 z-3 left-0 w-full h-full p-8 flex-col">
+            <div class="flex flex-col flex-1">
+              <h5 class="text-3xl text-white font-bold mb-1">{anime.title}</h5>
+              <span class="text-sm font-semibold mb-3 text-yellow-400">
+                ☆ {anime.imdb_rate}
+              </span>
+              <p class="text-sm text-zinc-200 font-medium">{anime.overview}</p>
+            </div>
+          </div>
+        </a>
+      ))
+    }
+  </div>
+</section>
