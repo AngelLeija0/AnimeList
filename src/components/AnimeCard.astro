@@ -1,0 +1,48 @@
+---
+import AnimeListButton from "@/components/AnimeListButton.vue";
+
+import { Image } from "astro:assets";
+const { anime, className = "", session = null, showStatus = false } = Astro.props;
+
+---
+
+<article class={`w-full h-full relative ${className}`} id={`anime-card-${anime.id}`}>
+  {
+    session ? <AnimeListButton client:visible session={session} animeId={anime.id} showStatus={showStatus} className={`absolute z-50 ${!showStatus ? "top-2 right-2" : "top-0 left-0 w-full p-2"}`} /> : null
+  }
+  <a
+    href={`animes/${anime.id}`}
+    data-astro-prefetch
+    class="overflow-hidden relative group cursor-pointer"
+  >
+    <div
+      class="relative w-full h-full rounded-xl overflow-hidden bg-zinc-700 animate-pulse"
+    >
+      <Image
+        src={anime.image_src}
+        alt={anime.title}
+        width={1920}
+        height={762}
+        loading="lazy"
+        transition:name={`anime-image-${anime.id}`}
+        class="w-full h-full object-cover rounded-xl opacity-0 transition-opacity duration-500"
+        onload="this.style.opacity='1'; this.parentElement.classList.remove('animate-pulse', 'bg-zinc-700')"
+      />
+    </div>
+    <div
+      class="hidden group-hover:flex transition-all duration-1000 absolute top-0 z-3 left-0 w-full h-full background-blur-sm p-8 flex-col rounded-xl"
+    >
+      <div class="flex flex-col flex-1">
+        <h5 class="text-2xl text-white font-bold mb-1">
+          {anime.title}
+        </h5>
+        <span class="text-sm font-semibold mb-3 text-yellow-400">
+          ☆ {anime.imdb_rate || "N/A"}
+        </span>
+        <p class="text-sm text-zinc-200 font-medium">
+          {anime.overview}
+        </p>
+      </div>
+    </div>
+  </a>
+</article>

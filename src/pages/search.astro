@@ -1,0 +1,89 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Main from "@/components/Main.astro";
+import Link from "@/components/Link.astro";
+import AnimeCard from "@/components/AnimeCard.astro";
+import AnimeService from "@/lib/animeService";
+
+const animesPreview = await AnimeService.get({
+  size: 20,
+  sortBy: "imdb_rate:desc",
+});
+
+export const prerender = true; // Client Side Rendering
+---
+
+<Layout title="Search">
+  <Main>
+    <section class="mt-30 p-4 sm:p-8 flex flex-col items-center justify-center">
+      <h1 class="text-4xl text-white font-bold mb-8">Search an anime</h1>
+      <div class="relative w-full max-w-150 mb-8">
+        <input
+          id="search-input"
+          type="text"
+          placeholder=""
+          class="border border-zinc-700 bg-zinc-900 text-lg text-white px-4 py-4 w-full rounded-2xl"
+        />
+        <div class="absolute top-0 right-0 h-full flex items-center p-2">
+          <Link id="search-link" className="py-[0.7rem]">Search</Link>
+        </div>
+      </div>
+      <div class="flex gap-4 overflow-hidden relative carousel">
+        {
+          animesPreview.map((anime) => (
+            <img
+              src={anime.image_src}
+              class="carousel-items min-w-50 h-auto rounded-2xl overflow-hidden"
+            />
+          ))
+        }
+        <div class="absolute top-0 left-0 w-full h-full bg-black/30"></div>
+      </div>
+    </section>
+  </Main>
+</Layout>
+
+<script>
+  import gsap from "gsap";
+
+  document.addEventListener("astro:page-load", () => {
+    const searchInput = document.querySelector("#search-input");
+    const searchLink = document.querySelector("#search-link");
+
+    if (searchInput && searchLink) {
+      searchInput.addEventListener("input", (e) => {
+        const value = encodeURIComponent(e.target.value.trim());
+        searchLink.href = value ? `/animes?q=${value}` : "#";
+      });
+    }
+
+    const carousel = document.querySelector(".carousel");
+    const items = carousel.querySelectorAll(".carousel-items");
+
+    if (carousel && items.length > 0) {
+      const totalItems = items.length;
+      const cloneCount = totalItems;
+
+      for (let i = 0; i < cloneCount; i++) {
+        const clone = items[i].cloneNode(true);
+        carousel.appendChild(clone);
+      }
+
+      const allItems = carousel.querySelectorAll(".carousel-items");
+      const totalWidth = Array.from(allItems).reduce(
+        (acc, item) => acc + item.offsetWidth + 16,
+        0
+      );
+
+      gsap.to(carousel, {
+        x: -totalWidth / 2,
+        duration: 50,
+        ease: "none",
+        repeat: -1,
+        modifiers: {
+          x: gsap.utils.unitize((x) => parseFloat(x) % (totalWidth / 2))
+        },
+      });
+    }
+  });
+</script>

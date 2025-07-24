@@ -1,0 +1,30 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Main from "@/components/Main.astro";
+import { getSession } from "auth-astro/server";
+
+const session = await getSession(Astro.request);
+if (!session) return Astro.redirect("/");
+
+export const prerender = false; // Server Side Rendering
+---
+
+<Layout title="Search">
+    <Main>
+        <section class="mt-30 p-8 flex flex-col items-center justify-center">
+            <h1 class="text-4xl text-white font-bold mb-8">Account</h1>
+            <p class="pt-20">{JSON.stringify(session)}</p>
+            <button id="logout-button">Logout</button>
+        </section>
+    </Main>
+</Layout>
+
+<script>
+  document.addEventListener("astro:page-load", async () => {
+    const { signOut } = await import("auth-astro/client");
+    const logoutButton = document.querySelector("#logout-button");
+    if (logoutButton) {
+      logoutButton.addEventListener("click", () => signOut());
+    }
+  });
+</script>

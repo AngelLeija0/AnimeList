@@ -1,0 +1,48 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import GoogleButton from "@/components/GoogleButton.astro";
+import { getSession } from "auth-astro/server";
+
+const session = await getSession(Astro.request);
+if (session?.user) return Astro.redirect("/");
+
+export const prerender = false; // Server Side Rendering
+---
+
+<Layout title="Home" hideNavbar="true">
+  <header
+    class="fixed top-0 left-0 w-full p-4 flex justify-between gap-2 items-center z-10"
+  >
+    <a href="/" class="text-white text-xl font-semibold">AnimeList</a>
+    <a
+      href="/"
+      class="flex items-center justify-center p-2.5 text-white hover:bg-white/40 rounded-lg cursor-pointer transition-colors"
+    >
+      <svg
+        class="size-4.5"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        ><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path
+          d="M5 12l-2 0l9 -9l9 9l-2 0"></path><path
+          d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7"></path><path
+          d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6"></path></svg
+      >
+    </a>
+  </header>
+  <main
+    class="w-screen min-h-screen relative flex items-center justify-center px-4 sm:px-6"
+  >
+    <section
+      class="flex flex-col items-center shadow-2xl backdrop-blur-md max-w-100"
+    >
+      <h1 class="text-[1.9rem] font-bold text-zinc-200 mb-8">Login</h1>
+      <GoogleButton />
+    </section>
+  </main>
+</Layout>

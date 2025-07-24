@@ -10,9 +10,15 @@
   },
   "dependencies": {
     "@astrojs/vercel": "^8.2.2",
+    "@astrojs/vue": "^5.1.0",
+    "@auth/core": "^0.37.4",
+    "@supabase/supabase-js": "^2.52.0",
     "@tailwindcss/vite": "^4.1.11",
     "astro": "^5.12.0",
+    "auth-astro": "^4.2.0",
     "gsap": "^3.13.0",
-    "tailwindcss": "^4.1.11"
+    "tailwindcss": "^4.1.11",
+    "vue": "^3.5.18",
+    "vue-sonner": "^2.0.2"
   }
 }

@@ -1,0 +1,44 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Main from "@/components/Main.astro";
+import Link from "@/components/Link.astro";
+import AnimeService from "@/lib/animeService";
+
+const categories = {
+  general: "",
+  genres: AnimeService.getGenders(),
+  age_ratings: AnimeService.getAgeRatings(),
+};
+
+export const prerender = true; // Client Side Rendering
+---
+
+<Layout title="Categories">
+  <Main>
+    <section class="mt-20 p-8 flex flex-col items-center justify-center">
+      <h1 class="text-4xl text-white font-bold mb-8">Explore the categories</h1>
+      <div class="grid grid-cols-3 gap-4">
+        <div class="col-span-2 flex flex-col">
+          <h3 class="text-xl text-zinc-400 font-semibold mb-4">Genres</h3>
+          <div class="grid grid-cols-4 gap-1">
+            {
+              categories.genres.map((genre) => (
+                <a href={`/animes?genre=${genre.toLowerCase()}`} class="text-base line-clamp-1">{genre}</a>
+              ))
+            }
+          </div>
+        </div>
+        <div class="col-span-1 flex flex-col">
+          <h3 class="text-xl text-zinc-400 font-semibold mb-4">Age Ratings</h3>
+          <div class="grid grid-cols-3 gap-y-1 gap-x-2">
+            {
+              categories.age_ratings.map((age_rate) => (
+                <a href={`/animes?age_rate=${age_rate.toLowerCase()}`} class="text-base line-clamp-1">{age_rate}</a>
+              ))
+            }
+          </div>
+        </div>
+      </div>
+    </section>
+  </Main>
+</Layout>

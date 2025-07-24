@@ -2,15 +2,17 @@
 import Layout from "@/layouts/Layout.astro";
 import Main from "@/components/Main.astro";
 import Hero from "@/components/Hero.astro";
-import Animes from "@/components/Animes.astro";
+import CategoryPreview from "@/components/CategoryPreview.astro";
+import StartNow from "@/components/StartNow.astro";
 import Footer from "@/components/Footer.astro";
 
-export const prerender = true;
+export const prerender = true; // Client Side Rendering
 ---
 
 <Layout title="Home">
   <Main>
     <Hero />
-    <Animes />
+    <CategoryPreview />
+    <StartNow />
   </Main>
 </Layout>

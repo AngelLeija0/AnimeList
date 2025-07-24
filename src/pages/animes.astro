@@ -1,0 +1,112 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Main from "@/components/Main.astro";
+import Link from "@/components/Link.astro";
+import AnimeCard from "@/components/AnimeCard.astro";
+import AnimeService from "@/lib/animeService";
+import { getSession } from "auth-astro/server";
+
+const session = await getSession(Astro.request);
+
+const url = Astro.url;
+const urlParams = url.searchParams;
+
+let pageSize = 50;
+const pageSizeParam = urlParams.get("pageSize");
+
+if (pageSizeParam !== null) {
+  const parsed = Number(pageSizeParam);
+  if (!isNaN(parsed) && Number.isInteger(parsed) && parsed > 0) {
+    pageSize = parsed;
+  }
+}
+
+let sortBy = "title:asc";
+const categoryParam = urlParams.get("category");
+if (categoryParam == "recents") sortBy = "release_date:desc";
+if (categoryParam == "populars") sortBy = "imdb_rate:desc";
+
+const filters = {
+  genres: urlParams.get("genre") ? urlParams.get("genre").split(",") : null,
+  age_rating: urlParams.get("age_rating") || null,
+};
+
+let animes = [];
+const search = urlParams.get("q");
+
+if (search) {
+  animes = await AnimeService.search({ value: search, size: pageSize });
+} else {
+  animes = await AnimeService.get({ size: pageSize, sortBy, filters });
+}
+
+export const prerender = false; // Server Side Rendering
+---
+
+<Layout title="Animes">
+  <Main>
+    <section class="mt-14 p-8 flex flex-col mx-1">
+      <div class="flex justify-between items-center gap-6">
+        <h1 class="text-4xl text-white font-bold">Animes</h1>
+        <div class="flex gap-1">
+          <button
+            type="button"
+            class="flex items-center gap-2 px-4 py-2 text-sm hover:bg-white/40 rounded-xl cursor-pointer transition-colors"
+          >
+            <svg
+              class="size-4"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              ><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path
+                d="M4 6l9 0"></path><path d="M4 12l7 0"></path><path
+                d="M4 18l7 0"></path><path d="M15 15l3 3l3 -3"></path><path
+                d="M18 6l0 12"></path></svg
+            >
+            Sort By</button
+          >
+          <button
+            type="button"
+            class="flex items-center gap-2 px-4 py-2 text-sm hover:bg-white/40 rounded-xl cursor-pointer transition-colors"
+          >
+            <svg
+              class="size-4"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              ><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path
+                d="M4 4h16v2.172a2 2 0 0 1 -.586 1.414l-4.414 4.414v7l-6 2v-8.5l-4.48 -4.928a2 2 0 0 1 -.52 -1.345v-2.227z"
+              ></path></svg
+            >
+            Filter By</button
+          >
+        </div>
+      </div>
+      {
+        search ? (  
+          <div class="mt-4">
+            <p class="text-lg text-zinc-400 font-semibold">Search: {search}</p>
+          </div>
+        ) : null
+      }
+    </section>
+    <section
+      class="px-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mb-8"
+    >
+      {animes.map((anime) => <AnimeCard anime={anime} session={session} />)}
+    </section>
+    <div class="w-full max-w-fit mx-auto mb-8">
+      <Link href={`/animes${Astro.url.search}&pageSize=${pageSize + 20}`}> Cargar mas</Link>
+    </div>
+  </Main>
+</Layout>

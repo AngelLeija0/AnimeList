@@ -1,7 +1,7 @@
 ---
 import Layout from "@/layouts/Layout.astro";
 import Main from "@/components/Main.astro";
-import AnimeService from "@/data/AnimeService";
+import AnimeService from "@/lib/animeService";
 
 const { id } = Astro.params;
 
@@ -9,21 +9,101 @@ const anime = await AnimeService.getById(id);
 if (!anime) return Astro.redirect("/");
 
 export async function getStaticPaths() {
-const animes = await AnimeService.get({ size: 5000 });
+  const animes = await AnimeService.get({ size: 5000 });
 
   return animes.map((anime) => ({
     params: { id: anime.id },
   }));
 }
 
-export const prerender = true;
+export const prerender = true; // Client Side Rendering
 ---
 
-<Layout>
-  <Main className="mt-24 max-w-300 mx-auto">
-    <img src={anime.image_src} transition:name={`anime-image-${anime.id}`} class="w-auto h-80 object-contain object-left mb-4" />
-    <h1 class="text-3xl font-bold">{anime.title}</h1>
-    <p class="text-zinc-600 mt-2">{anime.overview}</p>
-    <p class="text-yellow-400 font-semibold">★ {anime.imdb_rate}</p>
+<Layout title={anime.title}>
+  <Main footer="false">
+    <section class="w-full min-h-screen relative pt-30 flex flex-col">
+      <a href="javascript:history.back()" class="absolute top-0 left-10 mt-30 z-10 text-white bg-white/30 hover:bg-white/20 p-2 rounded-lg cursor-pointer">
+        <svg
+        class="size-4"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          ><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path
+            d="M15 6l-6 6l6 6"></path></svg
+        >
+      </a>
+      <div
+        class="relative z-5 flex flex-col md:flex-row gap-8 pb-10 px-4 sm:px-6 md:px-8 w-full max-w-5xl mx-auto"
+      >
+        <div class="relative shrink-0 w-full md:w-80 h-auto md:h-auto">
+          <img
+            src={anime.image_src}
+            alt={anime.title}
+            transition:name={`anime-image-${anime.id}`}
+            class="w-full h-auto object-cover rounded-2xl overflow-hidden"
+          />
+        </div>
+        <div class="flex flex-col pt-4 md:pt-1">
+          <h1
+            class="text-3xl md:text-4xl text-white font-bold mb-2 flex flex-wrap items-end gap-3"
+          >
+            {anime.title}
+            <span
+              class="text-xs bg-white text-black font-medium px-1.5 py-0.5 rounded-md"
+            >
+              {anime.age_rating}
+            </span>
+          </h1>
+          <h2 class="text-zinc-100 text-base font-medium mb-3">
+            Original title: {anime.original_title}
+          </h2>
+          <span class="text-base font-semibold mb-3 text-yellow-400">
+            ☆ {anime.imdb_rate || "N/A"}
+          </span>
+          <p class="text-base text-zinc-200 font-medium">{anime.overview}</p>
+          <div class="mt-6 flex flex-col">
+            <p class="text-sm text-zinc-200 font-medium pb-2">Genres</p>
+            <div class="flex flex-wrap gap-x-2 gap-y-2">
+              {
+                anime?.genres?.map((genre) => (
+                  <span class="text-sm text-zinc-100 border border-zinc-400 px-2 py-0.5 rounded-full">
+                    {genre}
+                  </span>
+                ))
+              }
+            </div>
+          </div>
+          <div class="mt-6 flex flex-col">
+            <h3 class="text-base text-zinc-200 font-medium pb-2">Seasons <span class="text-xs">({anime.total_episodes || 0} episodes)</span></h3>
+            <div class="flex flex-col gap-1">
+              {
+                anime?.seasons?.map((season) => (
+                  <div class="flex items-end gap-2">
+                    <span class="text-sm text-white">
+                      Season {season.season_number}
+                    </span>
+                    <span class="text-xs text-zinc-300 pb-0.5">
+                      / {season.release_date}
+                    </span>
+                  </div>
+                ))
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+      <img
+        src={anime.image_src}
+        alt={anime.title}
+        class="absolute z-0 top-0 left-0 w-full h-full object-cover object-center"
+      />
+      <div
+        class="absolute z-1 top-0 w-full h-full backdrop-blur-md bg-black/60"
+      >
+      </div>
+    </section>
   </Main>
 </Layout>
