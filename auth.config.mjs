@@ -1,5 +1,4 @@
 import {
-  AUTH_SECRET,
   AUTH_GOOGLE_ID,
   AUTH_GOOGLE_SECRET,
 } from "astro:env/server";
@@ -8,7 +7,6 @@ import Google from "@auth/core/providers/google";
 import AuthService from "@/lib/authService";
 
 export default defineConfig({
-  secret: AUTH_SECRET,
   trustHost: true,
   providers: [
     Google({
