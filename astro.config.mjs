@@ -12,6 +12,9 @@ export default defineConfig({
   },
   adapter: vercel({
     imageService: true,
+    webAnalytics: {
+      enabled: true,
+    }
   }),
   integrations: [auth(), vue()],
   env: {
