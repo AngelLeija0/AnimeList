@@ -13,10 +13,18 @@
                 </button>
             </div>
         </div>
-        <div ref="cardsContainer"
+        <div v-if="filteredAnimeList.length > 0" ref="cardsContainer"
             class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
             <AnimeCardReactive v-for="(record, i) in filteredAnimeList" :key="record.anime.id" :anime="record.anime"
                 :session="session" :showStatus="true" @reload="fetchAnimeList" />
+        </div>
+        <div v-else" class="my-10 flex flex-col items-center">
+            <p class="text-white text-center text-lg mb-4">No animes found.</p>
+            <a href="/animes"
+                class="flex justify-center items-center gap-2 bg-white hover:bg-zinc-200 text-black text-base font-semibold px-6 py-3 rounded-xl cursor-pointer select-none"
+                data-astro-prefetch>
+                Explore now
+            </a>
         </div>
     </section>
 </template>

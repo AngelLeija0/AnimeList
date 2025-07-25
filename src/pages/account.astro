@@ -6,15 +6,19 @@ import { getSession } from "auth-astro/server";
 const session = await getSession(Astro.request);
 if (!session) return Astro.redirect("/");
 
+const { name, email, image } = session.user;
+
 export const prerender = false; // Server Side Rendering
 ---
 
 <Layout title="Search">
     <Main>
-        <section class="mt-30 p-8 flex flex-col items-center justify-center">
-            <h1 class="text-4xl text-white font-bold mb-8">Account</h1>
-            <p class="pt-20">{JSON.stringify(session)}</p>
-            <button id="logout-button">Logout</button>
+        <section class="mt-14 p-8 flex flex-col items-center justify-center max-w-100 mx-auto">
+            <h1 class="text-4xl text-white font-bold mb-12">Account</h1>
+            <img src={image} alt={`Profile picture of ${name}`} class="w-24 h-24 rounded-full mb-4" />
+            <h2 class="text-zinc-100 mb-2 font-semibold text-2xl">{name}</h2>
+            <p class="text-zinc-300 mb-4 font-medium">{email}</p>
+            <button id="logout-button" class="w-full bg-white text-black font-medium px-4 py-2 rounded-xl cursor-pointer hover:bg-zinc-200">Logout</button>
         </section>
     </Main>
 </Layout>

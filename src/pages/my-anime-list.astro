@@ -13,8 +13,8 @@ export const prerender = false; // Server Side Rendering
 <Layout title="My Animes">
   <Main>
     <section class="mt-14 p-8 flex flex-col items-center justify-center">
-      <h1 class="text-4xl text-white font-bold">My Animes</h1>
+      <h1 class="text-4xl text-white font-bold">My Anime List</h1>
     </section>
-    <MyAnimeList client:load session={session} />
+    <MyAnimeList client:only="vue" session={session} />
   </Main>
 </Layout>

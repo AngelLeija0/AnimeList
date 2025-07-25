@@ -4,20 +4,20 @@ import AnimeCard from "@/components/AnimeCard.astro";
 
 const categories = [
   {
-    title: "Mas recientes",
+    title: "More recents",
     items: await AnimeService.get({
       size: 12,
       sortBy: "release_date:desc",
     }),
-    page: "/recents",
+    page: "/animes?category=recents",
   },
   {
-    title: "Mas populares",
+    title: "Most popular",
     items: await AnimeService.get({
       size: 12,
       sortBy: "imdb_rate:desc",
     }),
-    page: "/popular",
+    page: "/animes?category=populars",
   },
 ];
 ---
