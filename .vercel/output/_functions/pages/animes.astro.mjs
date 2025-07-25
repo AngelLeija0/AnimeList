@@ -1,11 +1,11 @@
-import { c as createComponent, a as createAstro, e as renderComponent, d as renderTemplate, m as maybeRenderHead } from '../chunks/astro/server_Dkgk-V3U.mjs';
+import { c as createComponent, a as createAstro, e as renderComponent, d as renderTemplate, m as maybeRenderHead } from '../chunks/astro/server_Btkud6ZY.mjs';
 import 'kleur/colors';
-import { $ as $$Layout } from '../chunks/Layout_CDtVOUQR.mjs';
-import { $ as $$Main } from '../chunks/Main_CUjI6Xck.mjs';
-import { $ as $$Link } from '../chunks/Link_D_vsGiDl.mjs';
-import { $ as $$AnimeCard } from '../chunks/AnimeCard_079NPPp0.mjs';
+import { $ as $$Layout } from '../chunks/Layout_B3f38Vbd.mjs';
+import { $ as $$Main } from '../chunks/Main_ClStFmf0.mjs';
+import { $ as $$Link } from '../chunks/Link_BysI70Mq.mjs';
+import { $ as $$AnimeCard } from '../chunks/AnimeCard_mNBRfMUO.mjs';
 import { A as AnimeService } from '../chunks/animeService_Diipd3Ol.mjs';
-import { g as getSession } from '../chunks/server_CURo6mGD.mjs';
+import { g as getSession } from '../chunks/server_CAuKSGxP.mjs';
 export { renderers } from '../renderers.mjs';
 
 const $$Astro = createAstro();

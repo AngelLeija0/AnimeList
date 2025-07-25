@@ -1,11 +1,11 @@
-import { c as createComponent, a as createAstro, m as maybeRenderHead, b as addAttribute, e as renderComponent, d as renderTemplate, g as renderTransition } from './astro/server_Dkgk-V3U.mjs';
+import { c as createComponent, a as createAstro, m as maybeRenderHead, b as addAttribute, e as renderComponent, d as renderTemplate, g as renderTransition } from './astro/server_Btkud6ZY.mjs';
 import 'kleur/colors';
 import { mergeProps, ref, onMounted, useSSRContext } from 'vue';
 import { toast } from 'vue-sonner';
 import gsap from 'gsap';
 import { ssrRenderAttrs, ssrRenderClass, ssrInterpolate, ssrRenderStyle, ssrRenderList, ssrRenderAttr } from 'vue/server-renderer';
 import './index_BRwviSIQ.mjs';
-import { $ as $$Image } from './_astro_assets_Dym1OEgN.mjs';
+import { $ as $$Image } from './_astro_assets__1jQnxD4.mjs';
 /* empty css                         */
 
 const statuses = ['planned', 'watching', 'watched', 'dropped'];

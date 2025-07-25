@@ -1,4 +1,4 @@
-import { s as supabase, g as getSession } from '../../chunks/server_CURo6mGD.mjs';
+import { s as supabase, g as getSession } from '../../chunks/server_CAuKSGxP.mjs';
 import { A as AnimeService } from '../../chunks/animeService_Diipd3Ol.mjs';
 export { renderers } from '../../renderers.mjs';
 

@@ -1,6 +1,6 @@
 import { Auth } from '@auth/core';
 import { parseString } from 'set-cookie-parser';
-import { c as createInvalidVariablesError, g as getEnv$1, s as setOnSetGetEnv } from './runtime_BC6Xbq6g.mjs';
+import { c as createInvalidVariablesError, g as getEnv$1, s as setOnSetGetEnv } from './runtime_Cv1IxQIA.mjs';
 import Google from '@auth/core/providers/google';
 import { createClient } from '@supabase/supabase-js';
 

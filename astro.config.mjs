@@ -10,7 +10,9 @@ export default defineConfig({
   vite: {
     plugins: [tailwindcss()]
   },
-  adapter: vercel(),
+  adapter: vercel({
+    imageService: true,
+  }),
   integrations: [auth(), vue()],
   env: {
       schema: {

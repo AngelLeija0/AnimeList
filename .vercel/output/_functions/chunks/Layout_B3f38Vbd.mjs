@@ -1,8 +1,8 @@
-import { c as createComponent, a as createAstro, m as maybeRenderHead, b as addAttribute, e as renderComponent, f as renderScript, d as renderTemplate, h as renderHead, r as renderSlot } from './astro/server_Dkgk-V3U.mjs';
+import { c as createComponent, a as createAstro, m as maybeRenderHead, b as addAttribute, e as renderComponent, f as renderScript, d as renderTemplate, h as renderHead, r as renderSlot } from './astro/server_Btkud6ZY.mjs';
 import 'kleur/colors';
 /* empty css                           */
-import $$AccountButton from './AccountButton_DRn08Hwu.mjs';
-import $$MyAnimesButton from './MyAnimesButton_ZhQZMKGu.mjs';
+import $$AccountButton from './AccountButton_BgGY43Uy.mjs';
+import $$MyAnimesButton from './MyAnimesButton_DqvOUL4E.mjs';
 /* empty css                         */
 import 'clsx';
 
