@@ -1,0 +1,1 @@
+import{A as a}from"./AnimeListButton.BaSlC_8o.js";import"./runtime-dom.esm-bundler.BZRa_mre.js";import"./runtime-core.esm-bundler.DqDjC33v.js";import"./_plugin-vue_export-helper.DbbboyIR.js";import"./index.CH_iu5NA.js";export{a as default};

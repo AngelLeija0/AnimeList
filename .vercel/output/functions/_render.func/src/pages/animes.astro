@@ -1,0 +1,69 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Main from "@/components/Main.astro";
+import Link from "@/components/Link.astro";
+import AnimeCard from "@/components/AnimeCard.astro";
+import AnimeService from "@/lib/animeService";
+import { getSession } from "auth-astro/server";
+
+const session = await getSession(Astro.request);
+
+const url = Astro.url;
+const urlParams = url.searchParams;
+
+let pageSize = 50;
+const pageSizeParam = urlParams.get("pageSize");
+
+if (pageSizeParam !== null) {
+  const parsed = Number(pageSizeParam);
+  if (!isNaN(parsed) && Number.isInteger(parsed) && parsed > 0) {
+    pageSize = parsed;
+  }
+}
+
+let sortBy = "title:asc";
+const categoryParam = urlParams.get("category");
+if (categoryParam == "recents") sortBy = "release_date:desc";
+if (categoryParam == "populars") sortBy = "imdb_rate:desc";
+
+const filters = {
+  genres: urlParams.get("genre") ? urlParams.get("genre").split(",") : null,
+  age_rating: urlParams.get("age_rating") || null,
+};
+
+let animes = [];
+const search = urlParams.get("q");
+
+if (search) {
+  animes = await AnimeService.search({ value: search, size: pageSize });
+} else {
+  animes = await AnimeService.get({ size: pageSize, sortBy, filters });
+}
+
+export const prerender = false; // Server Side Rendering
+---
+
+<Layout title="Animes">
+  <Main>
+    <section class="mt-14 p-8 flex flex-col mx-1">
+      <div class="flex justify-between items-center gap-6">
+        <h1 class="text-4xl text-white font-bold">Animes</h1>
+      </div>
+      {
+        search ? (  
+          <div class="mt-4">
+            <p class="text-lg text-zinc-400 font-semibold">Search: {search}</p>
+          </div>
+        ) : null
+      }
+    </section>
+    <section
+      class="px-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mb-8"
+    >
+      {animes.map((anime) => <AnimeCard anime={anime} session={session} />)}
+    </section>
+    <div class="w-full max-w-fit mx-auto mb-8">
+      <Link href={`/animes${Astro.url.search}&pageSize=${pageSize + 20}`}> Cargar mas</Link>
+    </div>
+  </Main>
+</Layout>

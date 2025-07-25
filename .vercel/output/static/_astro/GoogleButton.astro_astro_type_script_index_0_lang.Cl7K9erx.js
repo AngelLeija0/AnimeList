@@ -1,0 +1,1 @@
+import{_ as e}from"./preload-helper.BlTxHScW.js";document.addEventListener("astro:page-load",async()=>{const{signIn:t}=await e(async()=>{const{signIn:n}=await import("./client.BqElmF-z.js");return{signIn:n}},[]),o=document.querySelector("#login-google-button");o&&o.addEventListener("click",()=>t("google"))});

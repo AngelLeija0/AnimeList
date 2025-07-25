@@ -1,0 +1,1 @@
+import{_ as n}from"./preload-helper.BlTxHScW.js";document.addEventListener("astro:page-load",async()=>{const{signOut:o}=await n(async()=>{const{signOut:e}=await import("./client.BqElmF-z.js");return{signOut:e}},[]),t=document.querySelector("#logout-button");t&&t.addEventListener("click",()=>o())});

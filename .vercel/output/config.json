@@ -18,6 +18,30 @@
 		{
 			"src": "^/_image/?$",
 			"dest": "_render"
+		},
+		{
+			"src": "^/account/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/animes/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/api/auth(?:/(.*?))?/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/api/users_animes\\.json/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/login/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/my-anime-list/?$",
+			"dest": "_render"
 		}
 	]
 }
