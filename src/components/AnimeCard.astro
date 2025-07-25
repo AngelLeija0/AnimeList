@@ -1,7 +1,6 @@
 ---
 import AnimeListButton from "@/components/AnimeListButton.vue";
 
-import { Image } from "astro:assets";
 const { anime, className = "", session = null, showStatus = false } = Astro.props;
 
 ---
@@ -18,7 +17,7 @@ const { anime, className = "", session = null, showStatus = false } = Astro.prop
     <div
       class="relative w-full h-full rounded-xl overflow-hidden bg-zinc-700 animate-pulse"
     >
-      <Image
+      <img
         src={anime.image_src}
         alt={anime.title}
         width={1920}

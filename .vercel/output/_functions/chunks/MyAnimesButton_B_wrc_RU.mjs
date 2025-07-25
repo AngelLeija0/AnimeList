@@ -1,7 +1,7 @@
-import { c as createComponent, a as createAstro, m as maybeRenderHead, d as renderTemplate } from './astro/server_Btkud6ZY.mjs';
+import { c as createComponent, a as createAstro, m as maybeRenderHead, d as renderTemplate } from './astro/server_CZVEfshQ.mjs';
 import 'kleur/colors';
 import 'clsx';
-import { g as getSession } from './server_CAuKSGxP.mjs';
+import { g as getSession } from './server_DdZV-wyq.mjs';
 
 const $$Astro = createAstro();
 const $$MyAnimesButton = createComponent(async ($$result, $$props, $$slots) => {

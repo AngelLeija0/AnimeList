@@ -1,11 +1,11 @@
 import { bold } from 'kleur/colors';
 import { clsx } from 'clsx';
 import { escape } from 'html-escaper';
-import { decodeBase64, encodeBase64, encodeHexUpperCase, decodeHex } from '@oslojs/encoding';
+import { decodeBase64, encodeHexUpperCase, encodeBase64, decodeHex } from '@oslojs/encoding';
 import { z } from 'zod';
 import cssesc from 'cssesc';
 
-const ASTRO_VERSION = "5.12.0";
+const ASTRO_VERSION = "5.10.0";
 const REROUTE_DIRECTIVE_HEADER = "X-Astro-Reroute";
 const REWRITE_DIRECTIVE_HEADER_KEY = "X-Astro-Rewrite";
 const REWRITE_DIRECTIVE_HEADER_VALUE = "yes";
@@ -616,6 +616,16 @@ function getPropagationHint(result, factory) {
   return hint;
 }
 
+const RenderInstructionSymbol = Symbol.for("astro:render");
+function createRenderInstruction(instruction) {
+  return Object.defineProperty(instruction, RenderInstructionSymbol, {
+    value: true
+  });
+}
+function isRenderInstruction(chunk) {
+  return chunk && typeof chunk === "object" && chunk[RenderInstructionSymbol];
+}
+
 const PROP_TYPE = {
   Value: 0,
   JSON: 1,
@@ -904,11 +914,11 @@ function createThinHead() {
   };
 }
 
-var astro_island_prebuilt_default = `(()=>{var A=Object.defineProperty;var g=(i,o,a)=>o in i?A(i,o,{enumerable:!0,configurable:!0,writable:!0,value:a}):i[o]=a;var d=(i,o,a)=>g(i,typeof o!="symbol"?o+"":o,a);{let i={0:t=>m(t),1:t=>a(t),2:t=>new RegExp(t),3:t=>new Date(t),4:t=>new Map(a(t)),5:t=>new Set(a(t)),6:t=>BigInt(t),7:t=>new URL(t),8:t=>new Uint8Array(t),9:t=>new Uint16Array(t),10:t=>new Uint32Array(t),11:t=>1/0*t},o=t=>{let[l,e]=t;return l in i?i[l](e):void 0},a=t=>t.map(o),m=t=>typeof t!="object"||t===null?t:Object.fromEntries(Object.entries(t).map(([l,e])=>[l,o(e)]));class y extends HTMLElement{constructor(){super(...arguments);d(this,"Component");d(this,"hydrator");d(this,"hydrate",async()=>{var b;if(!this.hydrator||!this.isConnected)return;let e=(b=this.parentElement)==null?void 0:b.closest("astro-island[ssr]");if(e){e.addEventListener("astro:hydrate",this.hydrate,{once:!0});return}let c=this.querySelectorAll("astro-slot"),n={},h=this.querySelectorAll("template[data-astro-template]");for(let r of h){let s=r.closest(this.tagName);s!=null&&s.isSameNode(this)&&(n[r.getAttribute("data-astro-template")||"default"]=r.innerHTML,r.remove())}for(let r of c){let s=r.closest(this.tagName);s!=null&&s.isSameNode(this)&&(n[r.getAttribute("name")||"default"]=r.innerHTML)}let p;try{p=this.hasAttribute("props")?m(JSON.parse(this.getAttribute("props"))):{}}catch(r){let s=this.getAttribute("component-url")||"<unknown>",v=this.getAttribute("component-export");throw v&&(s+=\` (export \${v})\`),console.error(\`[hydrate] Error parsing props for component \${s}\`,this.getAttribute("props"),r),r}let u;await this.hydrator(this)(this.Component,p,n,{client:this.getAttribute("client")}),this.removeAttribute("ssr"),this.dispatchEvent(new CustomEvent("astro:hydrate"))});d(this,"unmount",()=>{this.isConnected||this.dispatchEvent(new CustomEvent("astro:unmount"))})}disconnectedCallback(){document.removeEventListener("astro:after-swap",this.unmount),document.addEventListener("astro:after-swap",this.unmount,{once:!0})}connectedCallback(){if(!this.hasAttribute("await-children")||document.readyState==="interactive"||document.readyState==="complete")this.childrenConnectedCallback();else{let e=()=>{document.removeEventListener("DOMContentLoaded",e),c.disconnect(),this.childrenConnectedCallback()},c=new MutationObserver(()=>{var n;((n=this.lastChild)==null?void 0:n.nodeType)===Node.COMMENT_NODE&&this.lastChild.nodeValue==="astro:end"&&(this.lastChild.remove(),e())});c.observe(this,{childList:!0}),document.addEventListener("DOMContentLoaded",e)}}async childrenConnectedCallback(){let e=this.getAttribute("before-hydration-url");e&&await import(e),this.start()}async start(){let e=JSON.parse(this.getAttribute("opts")),c=this.getAttribute("client");if(Astro[c]===void 0){window.addEventListener(\`astro:\${c}\`,()=>this.start(),{once:!0});return}try{await Astro[c](async()=>{let n=this.getAttribute("renderer-url"),[h,{default:p}]=await Promise.all([import(this.getAttribute("component-url")),n?import(n):()=>()=>{}]),u=this.getAttribute("component-export")||"default";if(!u.includes("."))this.Component=h[u];else{this.Component=h;for(let f of u.split("."))this.Component=this.Component[f]}return this.hydrator=p,this.hydrate},e,this)}catch(n){console.error(\`[astro-island] Error hydrating \${this.getAttribute("component-url")}\`,n)}}attributeChangedCallback(){this.hydrate()}}d(y,"observedAttributes",["props"]),customElements.get("astro-island")||customElements.define("astro-island",y)}})();`;
+const ISLAND_STYLES = "astro-island,astro-slot,astro-static-slot{display:contents}";
 
 var astro_island_prebuilt_dev_default = `(()=>{var A=Object.defineProperty;var g=(i,o,a)=>o in i?A(i,o,{enumerable:!0,configurable:!0,writable:!0,value:a}):i[o]=a;var l=(i,o,a)=>g(i,typeof o!="symbol"?o+"":o,a);{let i={0:t=>y(t),1:t=>a(t),2:t=>new RegExp(t),3:t=>new Date(t),4:t=>new Map(a(t)),5:t=>new Set(a(t)),6:t=>BigInt(t),7:t=>new URL(t),8:t=>new Uint8Array(t),9:t=>new Uint16Array(t),10:t=>new Uint32Array(t),11:t=>1/0*t},o=t=>{let[h,e]=t;return h in i?i[h](e):void 0},a=t=>t.map(o),y=t=>typeof t!="object"||t===null?t:Object.fromEntries(Object.entries(t).map(([h,e])=>[h,o(e)]));class f extends HTMLElement{constructor(){super(...arguments);l(this,"Component");l(this,"hydrator");l(this,"hydrate",async()=>{var b;if(!this.hydrator||!this.isConnected)return;let e=(b=this.parentElement)==null?void 0:b.closest("astro-island[ssr]");if(e){e.addEventListener("astro:hydrate",this.hydrate,{once:!0});return}let c=this.querySelectorAll("astro-slot"),n={},p=this.querySelectorAll("template[data-astro-template]");for(let r of p){let s=r.closest(this.tagName);s!=null&&s.isSameNode(this)&&(n[r.getAttribute("data-astro-template")||"default"]=r.innerHTML,r.remove())}for(let r of c){let s=r.closest(this.tagName);s!=null&&s.isSameNode(this)&&(n[r.getAttribute("name")||"default"]=r.innerHTML)}let u;try{u=this.hasAttribute("props")?y(JSON.parse(this.getAttribute("props"))):{}}catch(r){let s=this.getAttribute("component-url")||"<unknown>",v=this.getAttribute("component-export");throw v&&(s+=\` (export \${v})\`),console.error(\`[hydrate] Error parsing props for component \${s}\`,this.getAttribute("props"),r),r}let d,m=this.hydrator(this);d=performance.now(),await m(this.Component,u,n,{client:this.getAttribute("client")}),d&&this.setAttribute("client-render-time",(performance.now()-d).toString()),this.removeAttribute("ssr"),this.dispatchEvent(new CustomEvent("astro:hydrate"))});l(this,"unmount",()=>{this.isConnected||this.dispatchEvent(new CustomEvent("astro:unmount"))})}disconnectedCallback(){document.removeEventListener("astro:after-swap",this.unmount),document.addEventListener("astro:after-swap",this.unmount,{once:!0})}connectedCallback(){if(!this.hasAttribute("await-children")||document.readyState==="interactive"||document.readyState==="complete")this.childrenConnectedCallback();else{let e=()=>{document.removeEventListener("DOMContentLoaded",e),c.disconnect(),this.childrenConnectedCallback()},c=new MutationObserver(()=>{var n;((n=this.lastChild)==null?void 0:n.nodeType)===Node.COMMENT_NODE&&this.lastChild.nodeValue==="astro:end"&&(this.lastChild.remove(),e())});c.observe(this,{childList:!0}),document.addEventListener("DOMContentLoaded",e)}}async childrenConnectedCallback(){let e=this.getAttribute("before-hydration-url");e&&await import(e),this.start()}async start(){let e=JSON.parse(this.getAttribute("opts")),c=this.getAttribute("client");if(Astro[c]===void 0){window.addEventListener(\`astro:\${c}\`,()=>this.start(),{once:!0});return}try{await Astro[c](async()=>{let n=this.getAttribute("renderer-url"),[p,{default:u}]=await Promise.all([import(this.getAttribute("component-url")),n?import(n):()=>()=>{}]),d=this.getAttribute("component-export")||"default";if(!d.includes("."))this.Component=p[d];else{this.Component=p;for(let m of d.split("."))this.Component=this.Component[m]}return this.hydrator=u,this.hydrate},e,this)}catch(n){console.error(\`[astro-island] Error hydrating \${this.getAttribute("component-url")}\`,n)}}attributeChangedCallback(){this.hydrate()}}l(f,"observedAttributes",["props"]),customElements.get("astro-island")||customElements.define("astro-island",f)}})();`;
 
-const ISLAND_STYLES = "astro-island,astro-slot,astro-static-slot{display:contents}";
+var astro_island_prebuilt_default = `(()=>{var A=Object.defineProperty;var g=(i,o,a)=>o in i?A(i,o,{enumerable:!0,configurable:!0,writable:!0,value:a}):i[o]=a;var d=(i,o,a)=>g(i,typeof o!="symbol"?o+"":o,a);{let i={0:t=>m(t),1:t=>a(t),2:t=>new RegExp(t),3:t=>new Date(t),4:t=>new Map(a(t)),5:t=>new Set(a(t)),6:t=>BigInt(t),7:t=>new URL(t),8:t=>new Uint8Array(t),9:t=>new Uint16Array(t),10:t=>new Uint32Array(t),11:t=>1/0*t},o=t=>{let[l,e]=t;return l in i?i[l](e):void 0},a=t=>t.map(o),m=t=>typeof t!="object"||t===null?t:Object.fromEntries(Object.entries(t).map(([l,e])=>[l,o(e)]));class y extends HTMLElement{constructor(){super(...arguments);d(this,"Component");d(this,"hydrator");d(this,"hydrate",async()=>{var b;if(!this.hydrator||!this.isConnected)return;let e=(b=this.parentElement)==null?void 0:b.closest("astro-island[ssr]");if(e){e.addEventListener("astro:hydrate",this.hydrate,{once:!0});return}let c=this.querySelectorAll("astro-slot"),n={},h=this.querySelectorAll("template[data-astro-template]");for(let r of h){let s=r.closest(this.tagName);s!=null&&s.isSameNode(this)&&(n[r.getAttribute("data-astro-template")||"default"]=r.innerHTML,r.remove())}for(let r of c){let s=r.closest(this.tagName);s!=null&&s.isSameNode(this)&&(n[r.getAttribute("name")||"default"]=r.innerHTML)}let p;try{p=this.hasAttribute("props")?m(JSON.parse(this.getAttribute("props"))):{}}catch(r){let s=this.getAttribute("component-url")||"<unknown>",v=this.getAttribute("component-export");throw v&&(s+=\` (export \${v})\`),console.error(\`[hydrate] Error parsing props for component \${s}\`,this.getAttribute("props"),r),r}let u;await this.hydrator(this)(this.Component,p,n,{client:this.getAttribute("client")}),this.removeAttribute("ssr"),this.dispatchEvent(new CustomEvent("astro:hydrate"))});d(this,"unmount",()=>{this.isConnected||this.dispatchEvent(new CustomEvent("astro:unmount"))})}disconnectedCallback(){document.removeEventListener("astro:after-swap",this.unmount),document.addEventListener("astro:after-swap",this.unmount,{once:!0})}connectedCallback(){if(!this.hasAttribute("await-children")||document.readyState==="interactive"||document.readyState==="complete")this.childrenConnectedCallback();else{let e=()=>{document.removeEventListener("DOMContentLoaded",e),c.disconnect(),this.childrenConnectedCallback()},c=new MutationObserver(()=>{var n;((n=this.lastChild)==null?void 0:n.nodeType)===Node.COMMENT_NODE&&this.lastChild.nodeValue==="astro:end"&&(this.lastChild.remove(),e())});c.observe(this,{childList:!0}),document.addEventListener("DOMContentLoaded",e)}}async childrenConnectedCallback(){let e=this.getAttribute("before-hydration-url");e&&await import(e),this.start()}async start(){let e=JSON.parse(this.getAttribute("opts")),c=this.getAttribute("client");if(Astro[c]===void 0){window.addEventListener(\`astro:\${c}\`,()=>this.start(),{once:!0});return}try{await Astro[c](async()=>{let n=this.getAttribute("renderer-url"),[h,{default:p}]=await Promise.all([import(this.getAttribute("component-url")),n?import(n):()=>()=>{}]),u=this.getAttribute("component-export")||"default";if(!u.includes("."))this.Component=h[u];else{this.Component=h;for(let f of u.split("."))this.Component=this.Component[f]}return this.hydrator=p,this.hydrate},e,this)}catch(n){console.error(\`[astro-island] Error hydrating \${this.getAttribute("component-url")}\`,n)}}attributeChangedCallback(){this.hydrate()}}d(y,"observedAttributes",["props"]),customElements.get("astro-island")||customElements.define("astro-island",y)}})();`;
 
 function determineIfNeedsHydrationScript(result) {
   if (result._metadata.hasHydrationScript) {
@@ -973,16 +983,6 @@ function renderCspContent(result) {
   return `${directives} ${scriptSrc} ${styleSrc}`;
 }
 
-const RenderInstructionSymbol = Symbol.for("astro:render");
-function createRenderInstruction(instruction) {
-  return Object.defineProperty(instruction, RenderInstructionSymbol, {
-    value: true
-  });
-}
-function isRenderInstruction(chunk) {
-  return chunk && typeof chunk === "object" && chunk[RenderInstructionSymbol];
-}
-
 const voidElementNames = /^(area|base|br|col|command|embed|hr|img|input|keygen|link|meta|param|source|track|wbr)$/i;
 const htmlBooleanAttributes = /^(?:allowfullscreen|async|autofocus|autoplay|checked|controls|default|defer|disabled|disablepictureinpicture|disableremoteplayback|formnovalidate|hidden|inert|loop|nomodule|novalidate|open|playsinline|readonly|required|reversed|scoped|seamless|selected|itemscope)$/i;
 const AMPERSAND_REGEX = /&/g;
@@ -1015,16 +1015,7 @@ function formatList(values) {
   }
   return `${values.slice(0, -1).join(", ")} or ${values[values.length - 1]}`;
 }
-function isCustomElement(tagName) {
-  return tagName.includes("-");
-}
-function handleBooleanAttribute(key, value, shouldEscape, tagName) {
-  if (tagName && isCustomElement(tagName)) {
-    return markHTMLString(` ${key}="${toAttributeString(value, shouldEscape)}"`);
-  }
-  return markHTMLString(value ? ` ${key}` : "");
-}
-function addAttribute(value, key, shouldEscape = true, tagName = "") {
+function addAttribute(value, key, shouldEscape = true) {
   if (value == null) {
     return "";
   }
@@ -1058,23 +1049,23 @@ Make sure to use the static attribute syntax (\`${key}={value}\`) instead of the
     return markHTMLString(` ${key}="${toAttributeString(value, false)}"`);
   }
   if (htmlBooleanAttributes.test(key)) {
-    return handleBooleanAttribute(key, value, shouldEscape, tagName);
+    return markHTMLString(value ? ` ${key}` : "");
   }
   if (value === "") {
     return markHTMLString(` ${key}`);
   }
   if (key === "popover" && typeof value === "boolean") {
-    return handleBooleanAttribute(key, value, shouldEscape, tagName);
+    return markHTMLString(value ? ` popover` : "");
   }
   if (key === "download" && typeof value === "boolean") {
-    return handleBooleanAttribute(key, value, shouldEscape, tagName);
+    return markHTMLString(value ? ` download` : "");
   }
   return markHTMLString(` ${key}="${toAttributeString(value, shouldEscape)}"`);
 }
-function internalSpreadAttributes(values, shouldEscape = true, tagName) {
+function internalSpreadAttributes(values, shouldEscape = true) {
   let output = "";
   for (const [key, value] of Object.entries(values)) {
-    output += addAttribute(value, key, shouldEscape, tagName);
+    output += addAttribute(value, key, shouldEscape);
   }
   return markHTMLString(output);
 }
@@ -1091,9 +1082,9 @@ function renderElement$1(name, { props: _props, children = "" }, shouldEscape = 
     }
   }
   if ((children == null || children == "") && voidElementNames.test(name)) {
-    return `<${name}${internalSpreadAttributes(props, shouldEscape, name)}>`;
+    return `<${name}${internalSpreadAttributes(props, shouldEscape)}>`;
   }
-  return `<${name}${internalSpreadAttributes(props, shouldEscape, name)}>${children}</${name}>`;
+  return `<${name}${internalSpreadAttributes(props, shouldEscape)}>${children}</${name}>`;
 }
 const noop = () => {
 };
@@ -1459,9 +1450,6 @@ class ServerIslandComponent {
   displayName;
   hostId;
   islandContent;
-  componentPath;
-  componentExport;
-  componentId;
   constructor(result, props, slots, displayName) {
     this.result = result;
     this.props = props;
@@ -1469,64 +1457,8 @@ class ServerIslandComponent {
     this.displayName = displayName;
   }
   async init() {
-    const content = await this.getIslandContent();
-    if (this.result.cspDestination) {
-      this.result._metadata.extraScriptHashes.push(
-        await generateCspDigest(SERVER_ISLAND_REPLACER, this.result.cspAlgorithm)
-      );
-      const contentDigest = await generateCspDigest(content, this.result.cspAlgorithm);
-      this.result._metadata.extraScriptHashes.push(contentDigest);
-    }
-    return createThinHead();
-  }
-  async render(destination) {
-    const hostId = await this.getHostId();
-    const islandContent = await this.getIslandContent();
-    destination.write(createRenderInstruction({ type: "server-island-runtime" }));
-    destination.write("<!--[if astro]>server-island-start<![endif]-->");
-    for (const name in this.slots) {
-      if (name === "fallback") {
-        await renderChild(destination, this.slots.fallback(this.result));
-      }
-    }
-    destination.write(
-      `<script type="module" data-astro-rerun data-island-id="${hostId}">${islandContent}</script>`
-    );
-  }
-  getComponentPath() {
-    if (this.componentPath) {
-      return this.componentPath;
-    }
     const componentPath = this.props["server:component-path"];
-    if (!componentPath) {
-      throw new Error(`Could not find server component path`);
-    }
-    this.componentPath = componentPath;
-    return componentPath;
-  }
-  getComponentExport() {
-    if (this.componentExport) {
-      return this.componentExport;
-    }
     const componentExport = this.props["server:component-export"];
-    if (!componentExport) {
-      throw new Error(`Could not find server component export`);
-    }
-    this.componentExport = componentExport;
-    return componentExport;
-  }
-  async getHostId() {
-    if (!this.hostId) {
-      this.hostId = await crypto.randomUUID();
-    }
-    return this.hostId;
-  }
-  async getIslandContent() {
-    if (this.islandContent) {
-      return this.islandContent;
-    }
-    const componentPath = this.getComponentPath();
-    const componentExport = this.getComponentExport();
     const componentId = this.result.serverIslandNameMap.get(componentPath);
     if (!componentId) {
       throw new Error(`Could not find server component name`);
@@ -1539,13 +1471,13 @@ class ServerIslandComponent {
     const renderedSlots = {};
     for (const name in this.slots) {
       if (name !== "fallback") {
-        const content = await renderSlotToString(this.result, this.slots[name]);
-        renderedSlots[name] = content.toString();
+        const content2 = await renderSlotToString(this.result, this.slots[name]);
+        renderedSlots[name] = content2.toString();
       }
     }
     const key = await this.result.key;
     const propsEncrypted = Object.keys(this.props).length === 0 ? "" : await encryptString(key, JSON.stringify(this.props));
-    const hostId = await this.getHostId();
+    const hostId = crypto.randomUUID();
     const slash = this.result.base.endsWith("/") ? "" : "/";
     let serverIslandUrl = `${this.result.base}${slash}_server-islands/${componentId}${this.result.trailingSlash === "always" ? "/" : ""}`;
     const potentialSearchParams = createSearchParams(
@@ -1577,8 +1509,29 @@ let response = await fetch('${serverIslandUrl}', {
 	body: JSON.stringify(data),
 });`
     );
-    this.islandContent = `${method}replaceServerIsland('${hostId}', response);`;
-    return this.islandContent;
+    const content = `${method}replaceServerIsland('${hostId}', response);`;
+    if (this.result.cspDestination) {
+      this.result._metadata.extraScriptHashes.push(
+        await generateCspDigest(SERVER_ISLAND_REPLACER, this.result.cspAlgorithm)
+      );
+      const contentDigest = await generateCspDigest(content, this.result.cspAlgorithm);
+      this.result._metadata.extraScriptHashes.push(contentDigest);
+    }
+    this.islandContent = content;
+    this.hostId = hostId;
+    return createThinHead();
+  }
+  async render(destination) {
+    destination.write(createRenderInstruction({ type: "server-island-runtime" }));
+    destination.write("<!--[if astro]>server-island-start<![endif]-->");
+    for (const name in this.slots) {
+      if (name === "fallback") {
+        await renderChild(destination, this.slots.fallback(this.result));
+      }
+    }
+    destination.write(
+      `<script type="module" data-astro-rerun data-island-id="${this.hostId}">${this.islandContent}</script>`
+    );
   }
 }
 const renderServerIslandRuntime = () => {
@@ -2309,9 +2262,7 @@ If you're still stuck, please open an issue on GitHub or join us at https://astr
     const Tag = sanitizeElementName(Component);
     const childSlots = Object.values(children).join("");
     const renderTemplateResult = renderTemplate`<${Tag}${internalSpreadAttributes(
-      props,
-      true,
-      Tag
+      props
     )}${markHTMLString(
       childSlots === "" && voidElementNames.test(Tag) ? `/>` : `>${childSlots}</${Tag}>`
     )}`;
@@ -2665,6 +2616,23 @@ function prerenderElementChildren(tag, children) {
   }
 }
 
+async function renderScript(result, id) {
+  if (result._metadata.renderedScripts.has(id)) return;
+  result._metadata.renderedScripts.add(id);
+  const inlined = result.inlinedScripts.get(id);
+  if (inlined != null) {
+    if (inlined) {
+      return markHTMLString(`<script type="module">${inlined}</script>`);
+    } else {
+      return "";
+    }
+  }
+  const resolved = await result.resolve(id);
+  return markHTMLString(
+    `<script type="module" src="${result.userAssetsBase ? (result.base === "/" ? "" : result.base) + result.userAssetsBase : ""}${resolved}"></script>`
+  );
+}
+
 async function renderPage(result, componentFactory, props, children, streaming, route) {
   if (!isAstroComponentFactory(componentFactory)) {
     result._metadata.headInTree = result.componentMetadata.get(componentFactory.moduleId)?.containsHead ?? false;
@@ -2737,23 +2705,6 @@ async function renderPage(result, componentFactory, props, children, streaming, 
   } else {
     return new Response(body, { ...init, headers });
   }
-}
-
-async function renderScript(result, id) {
-  if (result._metadata.renderedScripts.has(id)) return;
-  result._metadata.renderedScripts.add(id);
-  const inlined = result.inlinedScripts.get(id);
-  if (inlined != null) {
-    if (inlined) {
-      return markHTMLString(`<script type="module">${inlined}</script>`);
-    } else {
-      return "";
-    }
-  }
-  const resolved = await result.resolve(id);
-  return markHTMLString(
-    `<script type="module" src="${result.userAssetsBase ? (result.base === "/" ? "" : result.base) + result.userAssetsBase : ""}${resolved}"></script>`
-  );
 }
 
 const EASE_IN_OUT_QUART = "cubic-bezier(0.76, 0, 0.24, 1)";
@@ -2999,9 +2950,9 @@ function spreadAttributes(values = {}, _name, { class: scopedClassName } = {}) {
     }
   }
   for (const [key, value] of Object.entries(values)) {
-    output += addAttribute(value, key, true, _name);
+    output += addAttribute(value, key, true);
   }
   return markHTMLString(output);
 }
 
-export { PrerenderDynamicEndpointPathCollide as $, AstroError as A, isAstroComponentFactory as B, ROUTE_TYPE_HEADER as C, DEFAULT_404_COMPONENT as D, EnvInvalidVariables as E, FailedToFetchRemoteImageDimensions as F, REROUTE_DIRECTIVE_HEADER as G, i18nNoLocaleFoundInPath as H, IncompatibleDescriptorOptions as I, ResponseSentError as J, MiddlewareNoDataOrNextCalled as K, LocalImageUsedWrongly as L, MissingImageDimension as M, NOOP_MIDDLEWARE_HEADER as N, MiddlewareNotAResponse as O, originPathnameSymbol as P, RewriteWithBodyUsed as Q, REDIRECT_STATUS_CODES as R, GetStaticPathsRequired as S, InvalidGetStaticPathsReturn as T, UnsupportedImageFormat as U, InvalidGetStaticPathsEntry as V, GetStaticPathsExpectedParams as W, GetStaticPathsInvalidRouteParam as X, PageNumberParamNotFound as Y, ActionNotFoundError as Z, NoMatchingStaticPathFound as _, createAstro as a, ReservedSlotName as a0, renderSlotToString as a1, renderJSX as a2, chunkToString as a3, isRenderInstruction as a4, ForbiddenRewrite as a5, SessionStorageInitError as a6, SessionStorageSaveError as a7, ASTRO_VERSION as a8, CspNotEnabled as a9, LocalsReassigned as aa, generateCspDigest as ab, PrerenderClientAddressNotAvailable as ac, clientAddressSymbol as ad, ClientAddressNotAvailable as ae, StaticClientAddressNotAvailable as af, AstroResponseHeadersReassigned as ag, responseSentSymbol as ah, renderPage as ai, REWRITE_DIRECTIVE_HEADER_KEY as aj, REWRITE_DIRECTIVE_HEADER_VALUE as ak, renderEndpoint as al, LocalsNotAnObject as am, REROUTABLE_STATUS_CODES as an, addAttribute as b, createComponent as c, renderTemplate as d, renderComponent as e, renderScript as f, renderTransition as g, renderHead as h, decodeKey as i, ActionsReturnedInvalidDataError as j, ExpectedImage as k, UnsupportedImageConversion as l, maybeRenderHead as m, NoImageMetadata as n, ExpectedImageOptions as o, ExpectedNotESMImage as p, InvalidImageService as q, renderSlot as r, ImageMissingAlt as s, toStyleString as t, spreadAttributes as u, ExperimentalFontsNotEnabled as v, FontFamilyNotFound as w, unescapeHTML as x, decryptString as y, createSlotValueFromString as z };
+export { PrerenderDynamicEndpointPathCollide as $, AstroError as A, isAstroComponentFactory as B, ROUTE_TYPE_HEADER as C, DEFAULT_404_COMPONENT as D, EnvInvalidVariables as E, FailedToFetchRemoteImageDimensions as F, REROUTE_DIRECTIVE_HEADER as G, i18nNoLocaleFoundInPath as H, IncompatibleDescriptorOptions as I, ResponseSentError as J, MiddlewareNoDataOrNextCalled as K, LocalImageUsedWrongly as L, MissingImageDimension as M, NOOP_MIDDLEWARE_HEADER as N, MiddlewareNotAResponse as O, originPathnameSymbol as P, RewriteWithBodyUsed as Q, REDIRECT_STATUS_CODES as R, GetStaticPathsRequired as S, InvalidGetStaticPathsReturn as T, UnsupportedImageFormat as U, InvalidGetStaticPathsEntry as V, GetStaticPathsExpectedParams as W, GetStaticPathsInvalidRouteParam as X, PageNumberParamNotFound as Y, ActionNotFoundError as Z, NoMatchingStaticPathFound as _, createAstro as a, ReservedSlotName as a0, renderSlotToString as a1, renderJSX as a2, chunkToString as a3, isRenderInstruction as a4, ForbiddenRewrite as a5, SessionStorageInitError as a6, SessionStorageSaveError as a7, ASTRO_VERSION as a8, CspNotEnabled as a9, LocalsReassigned as aa, PrerenderClientAddressNotAvailable as ab, clientAddressSymbol as ac, ClientAddressNotAvailable as ad, StaticClientAddressNotAvailable as ae, AstroResponseHeadersReassigned as af, responseSentSymbol as ag, renderPage as ah, REWRITE_DIRECTIVE_HEADER_KEY as ai, REWRITE_DIRECTIVE_HEADER_VALUE as aj, renderEndpoint as ak, LocalsNotAnObject as al, REROUTABLE_STATUS_CODES as am, addAttribute as b, createComponent as c, renderTemplate as d, renderComponent as e, renderScript as f, renderTransition as g, renderHead as h, decodeKey as i, ActionsReturnedInvalidDataError as j, ExpectedImage as k, UnsupportedImageConversion as l, maybeRenderHead as m, NoImageMetadata as n, ExpectedImageOptions as o, ExpectedNotESMImage as p, InvalidImageService as q, renderSlot as r, ImageMissingAlt as s, toStyleString as t, spreadAttributes as u, ExperimentalFontsNotEnabled as v, FontFamilyNotFound as w, unescapeHTML as x, decryptString as y, createSlotValueFromString as z };

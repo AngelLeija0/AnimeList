@@ -170,11 +170,9 @@ const GIF = {
 
 const brandMap = {
   avif: "avif",
-  avis: "avif",
-  // avif-sequence
   mif1: "heif",
   msf1: "heif",
-  // heif-sequence
+  // hief-sequence
   heic: "heic",
   heix: "heic",
   hevc: "heic",
@@ -190,7 +188,7 @@ function detectBrands(buffer, start, end) {
       brandsDetected[brand] = 1;
     }
   }
-  if ("avif" in brandsDetected || "avis" in brandsDetected) {
+  if ("avif" in brandsDetected) {
     return "avif";
   } else if ("heic" in brandsDetected || "heix" in brandsDetected || "hevc" in brandsDetected || "hevx" in brandsDetected) {
     return "heic";

@@ -1,5 +1,4 @@
 ---
-import { Image } from 'astro:assets';
 import Link from "@/components/Link.astro";
 import AnimeService from "@/lib/animeService";
 
@@ -29,7 +28,7 @@ const animes = await AnimeService.get({
     <div class="w-full h-full relative">
       {
         animes.map((anime, i) => (
-          <Image
+          <img
             src={anime.background_image_src || ""}
             alt={anime.title || "Image"}
             width={1920}
