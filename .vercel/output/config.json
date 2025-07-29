@@ -40,26 +40,24 @@
 			"dest": "_render"
 		},
 		{
+			"src": "^/categories/?$",
+			"dest": "_render"
+		},
+		{
 			"src": "^/login/?$",
 			"dest": "_render"
 		},
 		{
 			"src": "^/my-anime-list/?$",
 			"dest": "_render"
+		},
+		{
+			"src": "^/search/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/$",
+			"dest": "_render"
 		}
-	],
-	"images": {
-		"sizes": [
-			640,
-			750,
-			828,
-			1080,
-			1200,
-			1920,
-			2048,
-			3840
-		],
-		"domains": [],
-		"remotePatterns": []
-	}
+	]
 }

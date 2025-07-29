@@ -1,18 +1,12 @@
-import { c as createComponent, a as createAstro, e as renderComponent, d as renderTemplate, m as maybeRenderHead, b as addAttribute, g as renderTransition } from '../../chunks/astro/server_CGjP1nSd.mjs';
+import { c as createComponent, a as createAstro, e as renderComponent, d as renderTemplate, m as maybeRenderHead, b as addAttribute, g as renderTransition } from '../../chunks/astro/server_m2jZuNF-.mjs';
 import 'kleur/colors';
-import { $ as $$Layout } from '../../chunks/Layout_bxQplCC0.mjs';
-import { $ as $$Main } from '../../chunks/Main_p2-yjo_O.mjs';
+import { $ as $$Layout } from '../../chunks/Layout_Dq6VfChX.mjs';
+import { $ as $$Main } from '../../chunks/Main_m9IkjFmI.mjs';
 import { A as AnimeService } from '../../chunks/animeService_Diipd3Ol.mjs';
 /* empty css                                    */
 export { renderers } from '../../renderers.mjs';
 
 const $$Astro = createAstro();
-async function getStaticPaths() {
-  const animes = await AnimeService.get({ size: 5e3 });
-  return animes.map((anime) => ({
-    params: { id: anime.id }
-  }));
-}
 const prerender = false;
 const $$id = createComponent(async ($$result, $$props, $$slots) => {
   const Astro2 = $$result.createAstro($$Astro, $$props, $$slots);
@@ -34,7 +28,6 @@ const _page = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
   __proto__: null,
   default: $$id,
   file: $$file,
-  getStaticPaths,
   prerender,
   url: $$url
 }, Symbol.toStringTag, { value: 'Module' }));
