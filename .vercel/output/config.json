@@ -24,6 +24,10 @@
 			"dest": "_render"
 		},
 		{
+			"src": "^/animes/([^/]+?)/?$",
+			"dest": "_render"
+		},
+		{
 			"src": "^/animes/?$",
 			"dest": "_render"
 		},

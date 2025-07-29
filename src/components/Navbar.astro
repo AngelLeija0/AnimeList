@@ -44,7 +44,7 @@ const { hide = false } = Astro.props;
       </div>
     </div>
     <div class="flex gap-2 items-center">
-      <MyAnimesButton server:defer />
+      <MyAnimesButton />
       <a
         href="/search"
         class="flex items-center justify-center p-2.5 text-white hover:bg-white/40 rounded-lg cursor-pointer transition-colors"
@@ -64,7 +64,7 @@ const { hide = false } = Astro.props;
             d="M21 21l-6 -6"></path></svg
         >
       </a>
-      <AccountButton server:defer />
+      <AccountButton />
     </div>
   </div>
 </header>
