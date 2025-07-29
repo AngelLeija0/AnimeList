@@ -1,8 +1,7 @@
 import { defineConfig, envField } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
-import vercel from '@astrojs/vercel';
+import vercel from '@astrojs/vercel/serverless';
 import auth from 'auth-astro';
-
 import vue from "@astrojs/vue";
 
 export default defineConfig({
